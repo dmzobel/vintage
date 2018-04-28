@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../db');
 
-const Quality = db.define('quality', {
+const Vintage = db.define('vintage', {
   vintage: {
     type: Sequelize.INTEGER,
     allowNull: false
@@ -11,7 +11,16 @@ const Quality = db.define('quality', {
   },
   quality: {
     type: Sequelize.INTEGER
+  },
+  WRain: {
+    type: Sequelize.DECIMAL
+  },
+  HRain: {
+    type: Sequelize.DECIMAL
+  },
+  TAvg: {
+    type: Sequelize.DECIMAL
   }
 });
 
-module.exports = Quality;
+module.exports = Vintage;

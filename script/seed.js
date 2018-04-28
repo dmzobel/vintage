@@ -1,7 +1,13 @@
 const axios = require('axios');
 require('../secrets');
 const db = require('../server/db');
-const { Weather, Quality } = require('../server/db/models');
+const { Weather, Vintage } = require('../server/db/models');
+
+/*
+ *
+ * SEED FUNCTION FOR THE WEATHER MODEL
+ *
+ */
 
 // async function seed() {
 //   await db.sync({ force: true });
@@ -73,6 +79,12 @@ const { Weather, Quality } = require('../server/db/models');
 //  */
 // console.log('seeding...');
 
+/*
+ *
+ * SEED FUNCTION FOR THE VINTAGE MODEL
+ *
+ */
+
 async function createVintage() {
   const records = await Weather.findAll();
 
@@ -81,10 +93,42 @@ async function createVintage() {
   records.forEach(record => {
     createVintageInfo(record, summaryByYear);
   });
-  // console.log('summaryByYear', summaryByYear);
+
+  for (key in summaryByYear) {
+    const year = summaryByYear[key];
+
+    const avgTemp = year.summerTemps.length
+      ? year.summerTemps.reduce((a, b) => a + b) / year.summerTemps.length
+      : 0;
+
+    year.tAvg = avgTemp;
+
+    const qualityRating =
+      -12.145 +
+      0.00117 * year.winterRain +
+      0.0614 * year.tAvg -
+      0.00386 * year.harvestRain;
+
+    year.quality = qualityRating;
+  }
+
+  console.log(summaryByYear);
 }
 
-// helper function to determine the time of year to which the current record pertains
+createVintage();
+
+// iterate over each object
+// reduce the summer temp array
+// calculate quality based on the values
+// also store raw data
+
+/*
+ *
+ * HELPER FUNCTIONS
+ *
+ */
+
+// determines the time of year to which the current record pertains
 const findTimeOfYear = month => {
   if (month === 10 || month === 11 || month === 12) return 'oct-dec';
   else if (month === 1 || month === 2 || month === 3) return 'jan-mar';
@@ -92,7 +136,7 @@ const findTimeOfYear = month => {
   else return 'apr-july';
 };
 
-// helper function to create the
+// stores climate info in the correct year's object
 const createVintageInfo = (record, vintageObj) => {
   let year = +record.month.slice(0, 4);
   const month = +record.month.slice(5, 7);
@@ -100,7 +144,12 @@ const createVintageInfo = (record, vintageObj) => {
   if (findTimeOfYear(month) === 'oct-dec') year++;
 
   if (!vintageObj[year]) {
-    vintageObj[year] = { winterRain: 0, harvestRain: 0, summerTemp: [] };
+    vintageObj[year] = {
+      region: record.region,
+      winterRain: 0,
+      harvestRain: 0,
+      summerTemps: []
+    };
   }
 
   const vintage = vintageObj[year];
@@ -111,8 +160,8 @@ const createVintageInfo = (record, vintageObj) => {
     if (record.precip) vintage.winterRain += Number(record.precip);
   } else if (findTimeOfYear(month) === 'aug-sept') {
     if (record.precip) vintage.harvestRain += Number(record.precip);
-    if (record.temp) vintage.summerTemp.push(Number(record.temp));
+    if (record.temp) vintage.summerTemps.push(Number(record.temp));
   } else {
-    if (record.temp) vintage.summerTemp.push(Number(record.temp));
+    if (record.temp) vintage.summerTemps.push(Number(record.temp));
   }
 };

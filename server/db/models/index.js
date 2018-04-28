@@ -1,4 +1,4 @@
 const Weather = require('./Weather');
-const Quality = require('./Quality');
+const Vintage = require('./Vintage');
 
-module.exports = { Weather, Quality };
+module.exports = { Weather, Vintage };
