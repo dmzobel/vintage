@@ -4,14 +4,26 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
+.background-img {
+  position: absolute;
+  z-index: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
 .white-text {
   color: rgb(255, 255, 255) !important;
 }
 
 .vintage-list {
+  /* position: absolute; */
   width: 80% !important;
   margin: 3% 10% !important;
-  padding: 10px !important;
+  padding: 30px !important;
+}
+
+.relative {
+  position: relative;
 }
 
 .dropdown {

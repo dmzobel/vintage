@@ -41,7 +41,7 @@ class VintageList extends Component {
       });
 
     return (
-      <Paper zDepth={2} className="vintage-list">
+      <Paper zDepth={2} className="vintage-list relative">
         <DropdownMenu
           items={years.sort()}
           value={this.state.year}

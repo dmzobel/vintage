@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Avatar from 'material-ui/Avatar';
 import {
   blue300,
@@ -12,9 +13,11 @@ import {
 const style = { margin: 5 };
 
 const Logo = () => (
-  <Avatar backgroundColor={purple500} size={30} style={style}>
-    V
-  </Avatar>
+  <Link to="/">
+    <Avatar backgroundColor={purple500} size={30} style={style}>
+      V
+    </Avatar>
+  </Link>
 );
 
 export default Logo;
