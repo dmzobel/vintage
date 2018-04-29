@@ -13,3 +13,7 @@ body {
   margin: 3% 10% !important;
   padding: 10px !important;
 }
+
+.dropdown {
+  width: 25% !important;
+}

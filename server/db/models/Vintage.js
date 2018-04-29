@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const db = require('../db');
 
 const Vintage = db.define('vintage', {
-  vintage: {
+  year: {
     type: Sequelize.INTEGER,
     allowNull: false
   },

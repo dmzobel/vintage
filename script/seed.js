@@ -116,7 +116,7 @@ async function createVintage() {
         const year = summaryByYear[key];
 
         return Vintage.create({
-          vintage: Number(key),
+          year: Number(key),
           region: year.region,
           quality: year.quality,
           WRain: year.winterRain,
