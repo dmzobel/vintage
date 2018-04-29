@@ -11,12 +11,30 @@ body {
   height: 100vh;
 }
 
+.navbar {
+  background-color: #66bb6a !important;
+}
+
+.welcome {
+  text-align: center;
+  margin: 11%;
+}
+
+.title {
+  text-shadow: 1px 1px #252525;
+  font-size: 4em;
+}
+
+.subtitle {
+  text-shadow: 1px 1px #252525;
+  font-size: 2em;
+}
+
 .white-text {
   color: rgb(255, 255, 255) !important;
 }
 
 .vintage-list {
-  /* position: absolute; */
   width: 80% !important;
   margin: 3% 10% !important;
   padding: 30px !important;

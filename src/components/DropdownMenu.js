@@ -1,19 +1,20 @@
 import React from 'react';
-import DropDownMenu from 'material-ui/DropDownMenu';
+import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 
 export default function DropdownMenu(props) {
   return (
-    <DropDownMenu
+    <SelectField
       maxHeight={200}
       value={props.value}
       onChange={props.handleChange}
       className="dropdown"
       autoWidth={false}
+      floatingLabelText={'Filter By ' + props.filter}
     >
       {props.items.map(item => (
         <MenuItem value={item} key={item} primaryText={item} />
       ))}
-    </DropDownMenu>
+    </SelectField>
   );
 }

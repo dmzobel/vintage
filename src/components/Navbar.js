@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
 
@@ -6,9 +7,15 @@ import Logo from './Logo';
 
 const RightMenu = () => (
   <div>
-    <FlatButton label="Rankings" className="white-text" />
-    <FlatButton label="Map" className="white-text" />
-    <FlatButton label="Contact Us" className="white-text" />
+    <Link to="/rankings">
+      <FlatButton label="Rankings" className="white-text" />
+    </Link>
+    <Link to="">
+      <FlatButton label="Map" className="white-text" />
+    </Link>
+    <Link to="">
+      <FlatButton label="Contact Us" className="white-text" />
+    </Link>
   </div>
 );
 
@@ -18,6 +25,7 @@ const Navbar = () => (
       title="Vintage"
       iconElementLeft={<Logo />}
       iconElementRight={<RightMenu />}
+      className="navbar"
     />
   </div>
 );

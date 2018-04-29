@@ -10,7 +10,7 @@ class VintageList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      year: 0,
+      year: null,
       region: ''
     };
 
@@ -46,11 +46,13 @@ class VintageList extends Component {
           items={years.sort()}
           value={this.state.year}
           handleChange={this.filterYear}
+          filter="Year"
         />
         <DropdownMenu
           items={regions}
           value={this.state.region}
           handleChange={this.filterRegion}
+          filter="Region"
         />
         {vintages.map(vintage => {
           return (
