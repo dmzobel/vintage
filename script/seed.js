@@ -9,75 +9,76 @@ const { Weather, Vintage } = require('../server/db/models');
  *
  */
 
-// async function seed() {
-//   await db.sync({ force: true });
-//   console.log('db synced!');
-//   // Whoa! Because we `await` the promise that db.sync returns, the next line will not be
-//   // executed until that promise resolves!
+async function seed() {
+  await db.sync({ force: true });
+  console.log('db synced!');
+  // Whoa! Because we `await` the promise that db.sync returns, the next line will not be
+  // executed until that promise resolves!
 
-//   try {
-//     const rainfallRecord = await axios.get(
-//       'https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GSOM&datatypeid=PRCP&stationid=GHCND:FR000007510&units=metric&limit=1000&startdate=2010-10-01&enddate=2017-09-30',
-//       { headers: { token: process.env.NOAA_API_TOKEN } }
-//     );
+  try {
+    const rainfallRecord = await axios.get(
+      'https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GSOM&datatypeid=PRCP&stationid=GHCND:FR000007510&units=metric&limit=1000&startdate=2010-10-01&enddate=2017-09-30',
+      { headers: { token: process.env.NOAA_API_TOKEN } }
+    );
 
-//     await Promise.all(
-//       rainfallRecord.data.results.map(record => {
-//         return Weather.findOrCreate({
-//           where: {
-//             month: record.date,
-//             precip: record.value,
-//             region: 'Bordeaux'
-//           }
-//         });
-//       })
-//     );
-//   } catch (error) {
-//     console.log(error);
-//   }
+    await Promise.all(
+      rainfallRecord.data.results.map(record => {
+        return Weather.findOrCreate({
+          where: {
+            month: record.date,
+            precip: record.value,
+            region: 'Bordeaux'
+          }
+        });
+      })
+    );
+  } catch (error) {
+    console.log(error);
+  }
 
-//   try {
-//     const tempRecord = await axios.get(
-//       'https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GSOM&datatypeid=TAVG&stationid=GHCND:FR000007510&units=metric&limit=1000&startdate=2010-10-01&enddate=2017-09-30',
-//       { headers: { token: process.env.NOAA_API_TOKEN } }
-//     );
+  try {
+    const tempRecord = await axios.get(
+      'https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GSOM&datatypeid=TAVG&stationid=GHCND:FR000007510&units=metric&limit=1000&startdate=2010-10-01&enddate=2017-09-30',
+      { headers: { token: process.env.NOAA_API_TOKEN } }
+    );
 
-//     await Promise.all(
-//       tempRecord.data.results.map(record => {
-//         return Weather.findOne({
-//           where: {
-//             month: record.date,
-//             region: 'Bordeaux'
-//           }
-//         }).then(foundData => foundData.update({ temp: record.value }));
-//       })
-//     );
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
+    await Promise.all(
+      tempRecord.data.results.map(record => {
+        return Weather.findOne({
+          where: {
+            month: record.date,
+            region: 'Bordeaux'
+          }
+        }).then(foundData => foundData.update({ temp: record.value }));
+      })
+    );
+  } catch (error) {
+    console.log(error);
+  }
+}
 
-// // Execute the `seed` function
-// // `Async` functions always return a promise, so we can use `catch` to handle any errors
-// // that might occur inside of `seed`
-// seed()
-//   .catch(err => {
-//     console.error(err.message);
-//     console.error(err.stack);
-//     process.exitCode = 1;
-//   })
-//   .then(() => {
-//     console.log('closing db connection');
-//     db.close();
-//     console.log('db connection closed');
-//   });
+// Execute the `seed` function
+// `Async` functions always return a promise, so we can use `catch` to handle any errors
+// that might occur inside of `seed`
+seed()
+  .catch(err => {
+    console.error(err.message);
+    console.error(err.stack);
+    process.exitCode = 1;
+  })
+  .then(() => createVintage())
+  .then(() => {
+    console.log('closing db connection');
+    db.close();
+    console.log('db connection closed');
+  });
 
-// /*
-//  * note: everything outside of the async function is totally synchronous
-//  * The console.log below will occur before any of the logs that occur inside
-//  * of the async function
-//  */
-// console.log('seeding...');
+/*
+ * note: everything outside of the async function is totally synchronous
+ * The console.log below will occur before any of the logs that occur inside
+ * of the async function
+ */
+console.log('seeding...');
 
 /*
  *
@@ -86,9 +87,9 @@ const { Weather, Vintage } = require('../server/db/models');
  */
 
 async function createVintage() {
-  const records = await Weather.findAll();
-
+  console.log('seeding quality ratings');
   const summaryByYear = {};
+  const records = await Weather.findAll();
 
   records.forEach(record => {
     createVintageInfo(record, summaryByYear);
@@ -101,26 +102,33 @@ async function createVintage() {
       ? year.summerTemps.reduce((a, b) => a + b) / year.summerTemps.length
       : 0;
 
+    const qualityRating = rateWine(year.winterRain, avgTemp, year.harvestRain);
+
     year.tAvg = avgTemp;
-
-    const qualityRating =
-      -12.145 +
-      0.00117 * year.winterRain +
-      0.0614 * year.tAvg -
-      0.00386 * year.harvestRain;
-
     year.quality = qualityRating;
   }
 
-  console.log(summaryByYear);
+  // console.log(summaryByYear);
+
+  try {
+    await Promise.all(
+      Object.keys(summaryByYear).map(key => {
+        const year = summaryByYear[key];
+
+        return Vintage.create({
+          vintage: Number(key),
+          region: year.region,
+          quality: year.quality,
+          WRain: year.winterRain,
+          HRain: year.harvestRain,
+          TAvg: year.tAvg
+        });
+      })
+    );
+  } catch (error) {
+    console.log(error);
+  }
 }
-
-createVintage();
-
-// iterate over each object
-// reduce the summer temp array
-// calculate quality based on the values
-// also store raw data
 
 /*
  *
@@ -164,4 +172,12 @@ const createVintageInfo = (record, vintageObj) => {
   } else {
     if (record.temp) vintage.summerTemps.push(Number(record.temp));
   }
+};
+
+const rateWine = (winterRain, avgTemp, harvestRain) => {
+  winterCoeff = 0.00117 * winterRain;
+  tempCoeff = 0.0614 * avgTemp;
+  harvestCoeff = 0.00386 * harvestRain;
+
+  return -12.145 + winterCoeff + tempCoeff - harvestCoeff;
 };

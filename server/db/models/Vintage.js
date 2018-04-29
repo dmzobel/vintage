@@ -10,7 +10,7 @@ const Vintage = db.define('vintage', {
     type: Sequelize.STRING
   },
   quality: {
-    type: Sequelize.INTEGER
+    type: Sequelize.DECIMAL
   },
   WRain: {
     type: Sequelize.DECIMAL

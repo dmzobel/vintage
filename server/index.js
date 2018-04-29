@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const path = require('path');
 const db = require('./db');
 const PORT = process.env.PORT || 8080;
 module.exports = app;
@@ -24,8 +25,27 @@ const createApp = () => {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
 
-  // auth and api routes
+  // api routes
   app.use('/api', require('./api'));
+
+  // static file-serving middleware
+  app.use(express.static(path.join(__dirname, '..', 'public')));
+
+  // any remaining requests with an extension (.js, .css, etc.) send 404
+  app.use((req, res, next) => {
+    if (path.extname(req.path).length) {
+      const err = new Error('Not found');
+      err.status = 404;
+      next(err);
+    } else {
+      next();
+    }
+  });
+
+  // sends index.html
+  app.use('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'public/index.html'));
+  });
 
   // error handling endware
   app.use((err, req, res, next) => {
@@ -49,7 +69,9 @@ const syncDb = () => db.sync();
 // It will evaluate false when this module is required by another module - for example,
 // if we wanted to require our app in a test spec
 if (require.main === module) {
-  syncDb.then(createApp).then(startListening);
+  syncDb()
+    .then(createApp)
+    .then(startListening);
 } else {
   createApp();
 }
