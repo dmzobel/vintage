@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Home } from './components';
+import { Home, Navbar } from './components';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
@@ -8,6 +8,7 @@ export default class App extends Component {
     return (
       <div className="App">
         <MuiThemeProvider>
+          <Navbar />
           <Switch>
             <Route exact path="/" component={Home} />
             <Redirect to="/" />
