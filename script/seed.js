@@ -9,76 +9,109 @@ const { Weather, Vintage } = require('../server/db/models');
  *
  */
 
-async function seed() {
-  await db.sync({ force: true });
-  console.log('db synced!');
-  // Whoa! Because we `await` the promise that db.sync returns, the next line will not be
-  // executed until that promise resolves!
+// async function seed() {
+//   await db.sync({ force: true });
+//   console.log('db synced!');
+//   // Whoa! Because we `await` the promise that db.sync returns, the next line will not be
+//   // executed until that promise resolves!
 
-  try {
-    const rainfallRecord = await axios.get(
-      'https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GSOM&datatypeid=PRCP&stationid=GHCND:FR000007510&units=metric&limit=1000&startdate=2010-10-01&enddate=2017-09-30',
-      { headers: { token: process.env.NOAA_API_TOKEN } }
-    );
+//   try {
+//     const bordeauxRain = await axios.get(
+//       'https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GSOM&datatypeid=PRCP&stationid=GHCND:FR000007510&units=metric&limit=1000&startdate=2007-10-01&enddate=2016-09-30',
+//       { headers: { token: process.env.NOAA_API_TOKEN } }
+//     );
 
-    await Promise.all(
-      rainfallRecord.data.results.map(record => {
-        return Weather.findOrCreate({
-          where: {
-            month: record.date,
-            precip: record.value,
-            region: 'Bordeaux'
-          }
-        });
-      })
-    );
-  } catch (error) {
-    console.log(error);
-  }
+//     await Promise.all(
+//       bordeauxRain.data.results.map(record => {
+//         return Weather.findOrCreate({
+//           where: {
+//             month: record.date,
+//             precip: record.value,
+//             region: 'Bordeaux'
+//           }
+//         });
+//       })
+//     );
 
-  try {
-    const tempRecord = await axios.get(
-      'https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GSOM&datatypeid=TAVG&stationid=GHCND:FR000007510&units=metric&limit=1000&startdate=2010-10-01&enddate=2017-09-30',
-      { headers: { token: process.env.NOAA_API_TOKEN } }
-    );
+//     const napaRain = await axios.get(
+//       'https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GSOM&datatypeid=PRCP&stationid=GHCND:USW00093227&units=metric&limit=1000&startdate=2007-10-01&enddate=2016-09-30',
+//       { headers: { token: process.env.NOAA_API_TOKEN } }
+//     );
 
-    await Promise.all(
-      tempRecord.data.results.map(record => {
-        return Weather.findOne({
-          where: {
-            month: record.date,
-            region: 'Bordeaux'
-          }
-        }).then(foundData => foundData.update({ temp: record.value }));
-      })
-    );
-  } catch (error) {
-    console.log(error);
-  }
-}
+//     await Promise.all(
+//       napaRain.data.results.map(record => {
+//         return Weather.findOrCreate({
+//           where: {
+//             month: record.date,
+//             precip: record.value,
+//             region: 'Napa Valley'
+//           }
+//         });
+//       })
+//     );
+//   } catch (error) {
+//     console.log(error);
+//   }
 
-// Execute the `seed` function
-// `Async` functions always return a promise, so we can use `catch` to handle any errors
-// that might occur inside of `seed`
-seed()
-  .catch(err => {
-    console.error(err.message);
-    console.error(err.stack);
-    process.exitCode = 1;
-  })
-  .then(() => createVintage())
-  .then(() => {
-    console.log('closing db connection');
-    db.close();
-    console.log('db connection closed');
-  });
+//   try {
+//     const bordeauxTemp = await axios.get(
+//       'https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GSOM&datatypeid=TAVG&stationid=GHCND:FR000007510&units=metric&limit=1000&startdate=2007-10-01&enddate=2016-09-30',
+//       { headers: { token: process.env.NOAA_API_TOKEN } }
+//     );
 
-/*
- * note: everything outside of the async function is totally synchronous
- * The console.log below will occur before any of the logs that occur inside
- * of the async function
- */
-console.log('seeding...');
+//     await Promise.all(
+//       bordeauxTemp.data.results.map(record => {
+//         return Weather.findOne({
+//           where: {
+//             month: record.date,
+//             region: 'Bordeaux'
+//           }
+//         }).then(foundData => foundData.update({ temp: record.value }));
+//       })
+//     );
+
+//     const napaTemp = await axios.get(
+//       'https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GSOM&datatypeid=TAVG&stationid=GHCND:USW00093227&units=metric&limit=1000&startdate=2007-10-01&enddate=2016-09-30',
+//       { headers: { token: process.env.NOAA_API_TOKEN } }
+//     );
+
+//     await Promise.all(
+//       napaTemp.data.results.map(record => {
+//         return Weather.findOne({
+//           where: {
+//             month: record.date,
+//             region: 'Napa Valley'
+//           }
+//         }).then(foundData => foundData.update({ temp: record.value }));
+//       })
+//     );
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
+
+// // Execute the `seed` function
+// // `Async` functions always return a promise, so we can use `catch` to handle any errors
+// // that might occur inside of `seed`
+// seed()
+//   .then(() => createVintage())
+//   .catch(err => {
+//     console.error(err.message);
+//     console.error(err.stack);
+//     process.exitCode = 1;
+//   })
+//   .then(() => {
+//     console.log('closing db connection');
+//     db.close();
+//     console.log('db connection closed');
+//   });
+
+// /*
+//  * note: everything outside of the async function is totally synchronous
+//  * The console.log below will occur before any of the logs that occur inside
+//  * of the async function
+//  */
+// console.log('seeding...');
 
 /*
  *
@@ -88,40 +121,53 @@ console.log('seeding...');
 
 async function createVintage() {
   console.log('seeding quality ratings');
-  const summaryByYear = {};
+  const recordSummary = {};
   const records = await Weather.findAll();
 
   records.forEach(record => {
-    createVintageInfo(record, summaryByYear);
+    createVintageInfo(record, recordSummary);
   });
 
-  for (key in summaryByYear) {
-    const year = summaryByYear[key];
+  for (key in recordSummary) {
+    const region = recordSummary[key];
 
-    const avgTemp = year.summerTemps.length
-      ? year.summerTemps.reduce((a, b) => a + b) / year.summerTemps.length
-      : 0;
+    for (key in region) {
+      const year = region[key];
 
-    const qualityRating = rateWine(year.winterRain, avgTemp, year.harvestRain);
+      const avgTemp = year.summerTemps.length
+        ? year.summerTemps.reduce((a, b) => a + b) / year.summerTemps.length
+        : 0;
 
-    year.tAvg = avgTemp;
-    year.quality = qualityRating;
+      const qualityRating = rateWine(
+        year.winterRain,
+        avgTemp,
+        year.harvestRain
+      );
+
+      year.tAvg = avgTemp;
+      year.quality = qualityRating;
+    }
   }
 
-  // console.log(summaryByYear);
+  // console.log(recordSummary);
 
   try {
     await Promise.all(
-      Object.keys(summaryByYear).map(key => {
-        const year = summaryByYear[key];
+      Object.keys(recordSummary).map(key => {
+        const regionObj = recordSummary[key];
+        const region = key;
 
-        return Vintage.create({
-          year: Number(key),
-          region: year.region,
-          quality: year.quality,
-          WRain: year.winterRain,
-          HRain: year.harvestRain,
-          TAvg: year.tAvg
+        Object.keys(regionObj).map(key => {
+          const year = regionObj[key];
+
+          return Vintage.create({
+            year: Number(key),
+            region: region,
+            quality: year.quality,
+            WRain: year.winterRain,
+            HRain: year.harvestRain,
+            TAvg: year.tAvg
+          });
         });
       })
     );
@@ -129,6 +175,8 @@ async function createVintage() {
     console.log(error);
   }
 }
+
+createVintage();
 
 /*
  *
@@ -145,22 +193,27 @@ const findTimeOfYear = month => {
 };
 
 // stores climate info in the correct year's object
-const createVintageInfo = (record, vintageObj) => {
+const createVintageInfo = (record, masterObj) => {
+  if (!masterObj[record.region]) {
+    masterObj[record.region] = {};
+  }
+
+  const regionObj = masterObj[record.region];
+
   let year = +record.month.slice(0, 4);
   const month = +record.month.slice(5, 7);
 
   if (findTimeOfYear(month) === 'oct-dec') year++;
 
-  if (!vintageObj[year]) {
-    vintageObj[year] = {
-      region: record.region,
+  if (!regionObj[year]) {
+    regionObj[year] = {
       winterRain: 0,
       harvestRain: 0,
       summerTemps: []
     };
   }
 
-  const vintage = vintageObj[year];
+  const vintage = regionObj[year];
   if (
     findTimeOfYear(month) === 'oct-dec' ||
     findTimeOfYear(month) === 'jan-mar'
