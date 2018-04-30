@@ -19,6 +19,10 @@ body {
   font-family: 'Cinzel Decorative', cursive !important;
 }
 
+.welcome {
+  background-color: rgba(63, 63, 63, 0.4);
+}
+
 .center {
   text-align: center;
   margin: 11%;
