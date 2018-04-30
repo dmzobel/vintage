@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Paper from 'material-ui/Paper';
+import Checkbox from 'material-ui/Checkbox';
+import ActionFavorite from 'material-ui/svg-icons/action/favorite';
+import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
 import Divider from 'material-ui/Divider';
 
 import DropdownMenu from './DropdownMenu';
@@ -26,8 +29,8 @@ class VintageList extends Component {
   filterRegion = (event, index, value) => this.setState({ region: value });
 
   render() {
-    const regions = [];
-    const years = [];
+    const regions = ['All'];
+    const years = ['All'];
 
     this.props.vintages.forEach(vintage => {
       if (!regions.includes(vintage.region)) regions.push(vintage.region);
@@ -35,15 +38,23 @@ class VintageList extends Component {
     });
 
     const vintages = this.props.vintages
-      .filter(vintage => vintage.region.match(this.state.region))
-      .filter(vintage => {
-        return this.state.year ? vintage.year === this.state.year : vintage;
-      });
+      .filter(
+        vintage =>
+          !this.state.region || this.state.region === 'All'
+            ? vintage
+            : vintage.region === this.state.region
+      )
+      .filter(
+        vintage =>
+          !this.state.year || this.state.year === 'All'
+            ? vintage
+            : vintage.year === this.state.year
+      );
 
     return (
       <Paper zDepth={2} className="vintage-list relative">
         <DropdownMenu
-          items={years.sort()}
+          items={years.sort((a, b) => b - a)}
           value={this.state.year}
           handleChange={this.filterYear}
           filter="Year"
