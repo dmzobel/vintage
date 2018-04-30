@@ -14,7 +14,7 @@ const RightMenu = () => (
       <FlatButton label="Map" className="white-text" />
     </Link>
     <Link to="">
-      <FlatButton label="Contact Us" className="white-text" />
+      <FlatButton label="Login" className="white-text" />
     </Link>
   </div>
 );

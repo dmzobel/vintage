@@ -70,10 +70,15 @@ class VintageList extends Component {
           {vintages.map(vintage => {
             return (
               <div key={vintage.id}>
-                <li>
+                <li className="flexbox">
                   <p>
                     {vintage.year} {vintage.region}
                   </p>
+                  <Checkbox
+                    checkedIcon={<ActionFavorite />}
+                    uncheckedIcon={<ActionFavoriteBorder />}
+                    className="favorite"
+                  />
                 </li>
                 <Divider />
               </div>

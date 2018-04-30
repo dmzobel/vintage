@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Slider from 'material-ui/Slider';
+import Paper from 'material-ui/Paper';
 import { allVintagesThunk } from '../store';
 
 /**
@@ -8,28 +9,48 @@ import { allVintagesThunk } from '../store';
  * obtained through the value parameter fired on an onChange event.
  */
 class Map extends Component {
-  state = {
-    year: 0
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedYear: 0,
+      dateRange: []
+    };
 
-  componentDidMount() {
-    this.props.allVintagesThunk();
+    this.handleSlider = this.handleSlider.bind(this);
+  }
+
+  async componentDidMount() {
+    await this.props.allVintagesThunk();
+
+    const dateRange = [];
+    for (const vintage of this.props.vintages) {
+      if (!dateRange.includes(vintage.year)) dateRange.push(vintage.year);
+    }
+
+    this.setState({ dateRange });
+    this.setState({ selectedYear: Math.max(...dateRange) });
   }
 
   handleSlider = (event, value) => {
-    this.setState({ year: value });
+    this.setState({ selectedYear: value });
   };
 
   render() {
     return (
-      <div>
-        <Slider value={this.state.year} onChange={this.handleSlider} />
-        <p className="relative">
-          <span>{'The value of this slider is: '}</span>
-          <span>{this.state.year}</span>
-          <span>{' from a range of 0 to 1 inclusive'}</span>
+      <Paper zDepth={2} className="map relative">
+        <Slider
+          value={this.state.selectedYear}
+          min={Math.min(...this.state.dateRange)}
+          max={Math.max(...this.state.dateRange)}
+          step={1}
+          onChange={this.handleSlider}
+          style={{ width: 500 }}
+        />
+        <p className="subheader">
+          <span>{'Selected year: '}</span>
+          <span>{this.state.selectedYear}</span>
         </p>
-      </div>
+      </Paper>
     );
   }
 }
