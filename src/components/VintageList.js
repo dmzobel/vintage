@@ -65,16 +65,21 @@ class VintageList extends Component {
           handleChange={this.filterRegion}
           filter="Region"
         />
-        {vintages.map(vintage => {
-          return (
-            <div key={vintage.id}>
-              <p>
-                {vintage.year} {vintage.region}
-              </p>
-              <Divider />
-            </div>
-          );
-        })}
+        <h2>Rank</h2>
+        <ol>
+          {vintages.map(vintage => {
+            return (
+              <div key={vintage.id}>
+                <li>
+                  <p>
+                    {vintage.year} {vintage.region}
+                  </p>
+                </li>
+                <Divider />
+              </div>
+            );
+          })}
+        </ol>
       </Paper>
     );
   }

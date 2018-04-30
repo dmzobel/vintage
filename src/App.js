@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Home, Navbar } from './components';
+import { Home, Navbar, VintageList, Map } from './components';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import VintageListContainer from './components/VintageList';
 
 export default class App extends Component {
   render() {
@@ -13,7 +12,8 @@ export default class App extends Component {
           <Navbar />
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route exact path="/rankings" component={VintageListContainer} />
+            <Route exact path="/rankings" component={VintageList} />
+            <Route exact path="/map" component={Map} />
             <Redirect to="/" />
           </Switch>
         </MuiThemeProvider>

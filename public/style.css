@@ -15,6 +15,10 @@ body {
   background-color: #66bb6a !important;
 }
 
+.fun-font {
+  font-family: 'Cinzel Decorative', cursive !important;
+}
+
 .welcome {
   text-align: center;
   margin: 11%;
@@ -36,8 +40,10 @@ body {
 
 .vintage-list {
   width: 80% !important;
-  margin: 3% 10% !important;
+  height: 80vh;
+  margin: 2.5% 10% !important;
   padding: 30px !important;
+  overflow: scroll !important;
 }
 
 .relative {

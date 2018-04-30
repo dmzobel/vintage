@@ -10,7 +10,7 @@ const RightMenu = () => (
     <Link to="/rankings">
       <FlatButton label="Rankings" className="white-text" />
     </Link>
-    <Link to="">
+    <Link to="/map">
       <FlatButton label="Map" className="white-text" />
     </Link>
     <Link to="">
@@ -25,7 +25,7 @@ const Navbar = () => (
       title="Vintage"
       iconElementLeft={<Logo />}
       iconElementRight={<RightMenu />}
-      className="navbar"
+      className="navbar fun-font"
     />
   </div>
 );
