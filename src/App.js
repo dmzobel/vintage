@@ -8,7 +8,7 @@ export default class App extends Component {
     return (
       <div className="App">
         <MuiThemeProvider>
-          <img src="wine-country.jpg" className="background-img" />
+          <img src="wine-country.jpg" alt="" className="background-img" />
           <Navbar />
           <Switch>
             <Route exact path="/" component={Home} />
