@@ -13,6 +13,8 @@ body {
 
 .navbar {
   background-color: #2e7d32 !important;
+  display: flex;
+  align-items: center;
 }
 
 .fun-font {
@@ -44,6 +46,7 @@ body {
 
 .white-text {
   color: rgb(255, 255, 255) !important;
+  text-decoration: none;
 }
 
 .vintage-list {

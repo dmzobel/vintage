@@ -22,7 +22,6 @@ const RightMenu = () => (
 const Navbar = () => (
   <div>
     <AppBar
-      title="Vintage"
       iconElementLeft={<Logo />}
       iconElementRight={<RightMenu />}
       className="navbar fun-font"
