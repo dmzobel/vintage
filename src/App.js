@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './App.style.css';
 import { Home, Navbar, VintageList, Map } from './components';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Switch, Route, Redirect } from 'react-router-dom';
@@ -6,9 +7,8 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 export default class App extends Component {
   render() {
     return (
-      <div className="App">
+      <div id="app">
         <MuiThemeProvider>
-          <img src="wine-country.jpg" alt="" className="background-img" />
           <Navbar />
           <Switch>
             <Route exact path="/" component={Home} />

@@ -15,8 +15,6 @@ class Map extends Component {
       selectedYear: 0,
       dateRange: []
     };
-
-    this.handleSlider = this.handleSlider.bind(this);
   }
 
   async componentDidMount() {
@@ -37,7 +35,8 @@ class Map extends Component {
 
   render() {
     return (
-      <Paper zDepth={2} className="map relative">
+      <Paper zDepth={2} className="map">
+        <div id="map" />
         <Slider
           value={this.state.selectedYear}
           min={Math.min(...this.state.dateRange)}
@@ -46,7 +45,7 @@ class Map extends Component {
           onChange={this.handleSlider}
           style={{ width: 500 }}
         />
-        <p className="subheader">
+        <p className="subtitle">
           <span>{'Selected year: '}</span>
           <span>{this.state.selectedYear}</span>
         </p>
@@ -61,5 +60,9 @@ function mapState(state) {
   };
 }
 
-const MapContainer = connect(mapState, { allVintagesThunk })(Map);
+const MapContainer = connect(
+  mapState,
+  { allVintagesThunk }
+)(Map);
+
 export default MapContainer;

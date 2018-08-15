@@ -1,0 +1,91 @@
+#app {
+  overflow-y: scroll;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  background: url('./img/wine-country.jpg') no-repeat center center fixed;
+  background-size: cover;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+}
+
+.dropdown {
+  width: 25% !important;
+}
+
+.favorite {
+  margin: 10px !important;
+  width: 10% !important;
+}
+
+.flexbox {
+  display: flex;
+  justify-content: space-between;
+}
+
+.flexbox p {
+  width: 90%;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo-text {
+  font-family: 'Cinzel Decorative', cursive !important;
+}
+
+.map {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.navbar {
+  background-color: #2e7d32 !important;
+  display: flex;
+  align-items: center;
+  position: fixed !important;
+  left: 0;
+  top: 0;
+}
+
+.subtitle {
+  font-size: 2em;
+}
+
+.title {
+  font-size: 4em;
+  margin: 0 !important;
+  font-family: 'Cinzel Decorative', cursive;
+}
+
+.welcome {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-shadow: 1px 1px #252525;
+}
+
+.vintage-list {
+  width: 80%;
+  margin: 80px 10% 40px 10%;
+  padding: 30px;
+  position: relative;
+}
+
+.white-text {
+  color: rgb(255, 255, 255) !important;
+  text-decoration: none;
+}

@@ -52,7 +52,7 @@ class VintageList extends Component {
       );
 
     return (
-      <Paper zDepth={2} className="vintage-list relative">
+      <Paper zDepth={2} className="vintage-list">
         <DropdownMenu
           items={years.sort((a, b) => b - a)}
           value={this.state.year}
@@ -96,7 +96,8 @@ function mapState(state) {
   };
 }
 
-const VintageListContainer = connect(mapState, { allVintagesThunk })(
-  VintageList
-);
+const VintageListContainer = connect(
+  mapState,
+  { allVintagesThunk }
+)(VintageList);
 export default VintageListContainer;

@@ -7,26 +7,27 @@ import Logo from './Logo';
 
 const RightMenu = () => (
   <div>
+    <Link to="/">
+      <FlatButton label="Home" className="white-text" />
+    </Link>
     <Link to="/rankings">
       <FlatButton label="Rankings" className="white-text" />
     </Link>
     <Link to="/map">
       <FlatButton label="Map" className="white-text" />
     </Link>
-    <Link to="">
+    <Link to="/">
       <FlatButton label="Login" className="white-text" />
     </Link>
   </div>
 );
 
 const Navbar = () => (
-  <div>
-    <AppBar
-      iconElementLeft={<Logo />}
-      iconElementRight={<RightMenu />}
-      className="navbar fun-font"
-    />
-  </div>
+  <AppBar
+    iconElementLeft={<Logo />}
+    iconElementRight={<RightMenu />}
+    className="navbar"
+  />
 );
 
 export default Navbar;
