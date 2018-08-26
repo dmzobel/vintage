@@ -40,7 +40,11 @@ body {
   font-family: 'Cinzel Decorative', cursive !important;
 }
 
-.map {
+#map {
+  position: relative;
+}
+
+.map-container {
   display: flex;
   position: relative;
   flex-direction: column;

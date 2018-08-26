@@ -7,8 +7,8 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 export default class App extends Component {
   render() {
     return (
-      <div id="app">
-        <MuiThemeProvider>
+      <MuiThemeProvider>
+        <div id="app">
           <Navbar />
           <Switch>
             <Route exact path="/" component={Home} />
@@ -16,8 +16,8 @@ export default class App extends Component {
             <Route exact path="/map" component={Map} />
             <Redirect to="/" />
           </Switch>
-        </MuiThemeProvider>
-      </div>
+        </div>
+      </MuiThemeProvider>
     );
   }
 }
