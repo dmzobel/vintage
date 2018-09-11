@@ -1,0 +1,12 @@
+#map {
+  position: relative;
+}
+
+.map-container {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}

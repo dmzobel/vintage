@@ -4,6 +4,7 @@ import Slider from 'material-ui/Slider';
 import Paper from 'material-ui/Paper';
 import { allVintagesThunk } from '../store';
 import Datamap from 'datamaps';
+import './Map.style.css';
 
 /**
  * The slider bar can have a set minimum and maximum, and the value can be

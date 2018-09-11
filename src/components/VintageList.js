@@ -5,6 +5,7 @@ import Checkbox from 'material-ui/Checkbox';
 import ActionFavorite from 'material-ui/svg-icons/action/favorite';
 import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
 import Divider from 'material-ui/Divider';
+import './VintageList.style.css';
 
 import DropdownMenu from './DropdownMenu';
 import { allVintagesThunk } from '../store';

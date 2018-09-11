@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Avatar from 'material-ui/Avatar';
 import { purple500 } from 'material-ui/styles/colors';
 import { grapes } from '../img';
+import './Logo.style.css';
 
 const style = { margin: 5 };
 
