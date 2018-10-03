@@ -73,7 +73,7 @@ class VintageList extends Component {
           {vintages.map(vintage => {
             return (
               <div key={vintage.id}>
-                <li className="flexbox">
+                <li className="list-item">
                   <p>
                     {vintage.year} {vintage.region}
                   </p>

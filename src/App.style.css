@@ -13,15 +13,6 @@ body {
   -o-background-size: cover;
 }
 
-.flexbox {
-  display: flex;
-  justify-content: space-between;
-}
-
-.flexbox p {
-  width: 90%;
-}
-
 .subtitle {
   font-size: 2em;
 }
