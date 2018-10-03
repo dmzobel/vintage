@@ -8,11 +8,11 @@ import Logo from './Logo';
 
 const RightMenu = () => (
   <div>
-    <Link to="/">
-      <FlatButton label="Home" className="white-text" />
-    </Link>
     <Link to="/rankings">
       <FlatButton label="Rankings" className="white-text" />
+    </Link>
+    <Link to="/search">
+      <FlatButton label="Search" className="white-text" />
     </Link>
     <Link to="/map">
       <FlatButton label="Map" className="white-text" />

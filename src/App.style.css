@@ -13,6 +13,14 @@ body {
   -o-background-size: cover;
 }
 
+.paper-overlay {
+  width: 80%;
+  margin: 80px 10% 40px 10%;
+  padding: 30px;
+  position: relative;
+  z-index: 1;
+}
+
 .subtitle {
   font-size: 2em;
 }

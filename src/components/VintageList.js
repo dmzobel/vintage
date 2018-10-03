@@ -6,7 +6,6 @@ import ActionFavorite from 'material-ui/svg-icons/action/favorite';
 import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
 import Divider from 'material-ui/Divider';
 import './VintageList.style.css';
-
 import DropdownMenu from './DropdownMenu';
 import { allVintagesThunk } from '../store';
 
@@ -53,7 +52,7 @@ class VintageList extends Component {
       );
 
     return (
-      <Paper zDepth={2} className="vintage-list">
+      <Paper className="paper-overlay">
         <DropdownMenu
           items={years.sort((a, b) => b - a)}
           value={this.state.year}
