@@ -61,12 +61,14 @@ class VintageList extends Component {
           filter="Year"
         />
         <DropdownMenu
-          items={regions}
+          items={regions.sort()}
           value={this.state.region}
           handleChange={this.filterRegion}
           filter="Region"
         />
+
         <h2>Rank</h2>
+
         <ol>
           {vintages.map(vintage => {
             return (
