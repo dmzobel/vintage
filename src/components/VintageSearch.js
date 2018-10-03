@@ -12,7 +12,15 @@ class VintageSearch extends Component {
     this.setState({ input: evt.target.value });
   };
 
-  handleSearch = () => {};
+  handleSearch = () => {
+    let query = this.state.input;
+
+    const numRegex = /\d/g;
+    const nonNumRegex = /\D/g;
+
+    const year = query.match(numRegex);
+    let region = query.match(nonNumRegex).trim();
+  };
 
   render() {
     return (
@@ -20,7 +28,7 @@ class VintageSearch extends Component {
         <form onSubmit={this.handleSearch} className="search-form">
           <h3>Looking for a particular vintage?</h3>
           <TextField
-            placeholder="Search..."
+            placeholder="Search by year..."
             type="search"
             margin="normal"
             className="search-box"
