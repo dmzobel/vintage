@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
+import './Navbar.style.css';
 
 import Logo from './Logo';
 
@@ -16,7 +17,7 @@ const RightMenu = () => (
     <Link to="/map">
       <FlatButton label="Map" className="white-text" />
     </Link>
-    <Link to="/">
+    <Link to="/login">
       <FlatButton label="Login" className="white-text" />
     </Link>
   </div>

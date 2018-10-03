@@ -1,0 +1,11 @@
+.favorite {
+  margin: 10px !important;
+  width: 10% !important;
+}
+
+.vintage-list {
+  width: 80%;
+  margin: 80px 10% 40px 10%;
+  padding: 30px;
+  position: relative;
+}
