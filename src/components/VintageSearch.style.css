@@ -1,3 +1,7 @@
 .search-form {
   display: flex;
 }
+
+.search-box {
+  margin-left: 10px;
+}

@@ -4,12 +4,28 @@ import TextField from '@material-ui/core/TextField';
 import './VintageSearch.style.css';
 
 class VintageSearch extends Component {
+  state = {
+    input: ''
+  };
+
+  searchTyping = evt => {
+    this.setState({ input: evt.target.value });
+  };
+
+  handleSearch = () => {};
+
   render() {
     return (
       <Paper className="paper-overlay">
-        <form onSubmit className="search-form">
+        <form onSubmit={this.handleSearch} className="search-form">
           <h3>Looking for a particular vintage?</h3>
-          <TextField placeholder="Search..." type="search" margin="normal" />
+          <TextField
+            placeholder="Search..."
+            type="search"
+            margin="normal"
+            className="search-box"
+            onChange={this.searchTyping}
+          />
         </form>
       </Paper>
     );
