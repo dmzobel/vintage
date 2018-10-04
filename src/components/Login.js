@@ -9,7 +9,7 @@ const Login = props => {
     <div className="login-container">
       <Paper style={{ padding: '10px 30px' }}>
         <h2>Login</h2>
-        <form onSubmit className="login-form">
+        <form className="login-form">
           <TextField required id="emailInput" label="Email" margin="normal" />
           <TextField
             required
