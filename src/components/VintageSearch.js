@@ -1,25 +1,30 @@
 import React, { Component } from 'react';
-import Paper from '@material-ui/core/Paper';
-import TextField from '@material-ui/core/TextField';
+import {
+  Paper,
+  TextField,
+  FormControl,
+  Select,
+  InputLabel,
+  MenuItem
+} from '@material-ui/core';
 import './VintageSearch.style.css';
 
 class VintageSearch extends Component {
   state = {
-    input: ''
+    year: '',
+    region: ''
   };
 
-  searchTyping = evt => {
-    this.setState({ input: evt.target.value });
+  searchType = evt => {
+    this.setState({ year: evt.target.value });
+  };
+
+  selectDropdown = evt => {
+    this.setState({ region: evt.target.value });
   };
 
   handleSearch = () => {
-    let query = this.state.input;
-
-    const numRegex = /\d/g;
-    const nonNumRegex = /\D/g;
-
-    const year = query.match(numRegex);
-    let region = query.match(nonNumRegex).trim();
+    const year = this.state.year.trim();
   };
 
   render() {
@@ -28,12 +33,19 @@ class VintageSearch extends Component {
         <form onSubmit={this.handleSearch} className="search-form">
           <h3>Looking for a particular vintage?</h3>
           <TextField
-            placeholder="Search by year..."
+            placeholder="Year"
             type="search"
             margin="normal"
             className="search-box"
-            onChange={this.searchTyping}
+            onChange={this.searchType}
           />
+          <FormControl style={{ minWidth: 120 }}>
+            <InputLabel>Region</InputLabel>
+            <Select value={this.state.region} onChange={this.selectDropdown}>
+              <MenuItem value={'Bordeaux'}>Bordeaux</MenuItem>
+              <MenuItem value={'Napa Valley'}>Napa Valley</MenuItem>
+            </Select>
+          </FormControl>
         </form>
       </Paper>
     );
